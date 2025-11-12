@@ -26,15 +26,84 @@ const singleBill = async (req, res) => {
             data: bill
         });
     } catch (error) {
-        res.status(500).json({ 
+        res.status(500).json({
             success: false,
             message: error.message
-         });
+        });
     }
 }
+
+const payBill = async (req, res) => {
+    try {
+        const data = req.body;
+        const result = await db.collection('myBill').insertOne(data)
+        res.status(200).json({
+            success: true,
+            message: 'You bill paid successfully',
+            data: result
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
+const myBill = async (req, res) => {
+    try {
+        const { email } = req?.params;
+        console.log(email)
+        const bills = await db.collection('myBill').find({
+            email: email
+        }).toArray();
+        res.status(200).json({
+            success: true,
+            data: bills
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
+const myBillUpdate = async (req, res) => {
+    try {
+        const { amount, address, phone, date } = req.body;
+        const { email } = req.params;
+
+        const result = await db.collection("myBill").updateOne(
+            { email: email },
+            {
+                $set: {
+                    amount,
+                    address,
+                    phone,
+                    date,
+                },
+            }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: 'Bill update successfully',
+            data: result,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
 
 
 export const BillController = {
     allBill,
-    singleBill
+    singleBill,
+    payBill,
+    myBill,
+    myBillUpdate
 }
