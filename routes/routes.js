@@ -10,6 +10,7 @@ billRouter.get('/:id', BillController.singleBill);
 billRouter.post('/pay', BillController.payBill);
 billRouter.get('/my-bills/:email', BillController.myBill);
 billRouter.patch('/my-bills/:email', BillController.myBillUpdate);
+billRouter.delete('/my-bill/delete/:id', BillController.myBillDelete);
 
 
 export default billRouter

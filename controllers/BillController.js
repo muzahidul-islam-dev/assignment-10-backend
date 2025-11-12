@@ -71,11 +71,12 @@ const myBill = async (req, res) => {
 
 const myBillUpdate = async (req, res) => {
     try {
-        const { amount, address, phone, date } = req.body;
+        const { id, amount, address, phone, date } = req.body;
         const { email } = req.params;
 
+        console.log(id)
         const result = await db.collection("myBill").updateOne(
-            { email: email },
+            { _id: new ObjectId(id) },
             {
                 $set: {
                     amount,
@@ -86,10 +87,17 @@ const myBillUpdate = async (req, res) => {
             }
         );
 
+        const refreshData = await db.collection("myBill").find({
+            email
+        }).toArray();
+
         res.status(200).json({
             success: true,
             message: 'Bill update successfully',
-            data: result,
+            data: {
+                result: result,
+                allData: refreshData
+            },
         });
     } catch (error) {
         res.status(500).json({
@@ -99,11 +107,30 @@ const myBillUpdate = async (req, res) => {
     }
 };
 
+const myBillDelete = async (req,res) => {
+    try {
+        const { id } = req.params;
+        const result = await db.collection("myBill").deleteOne({_id: new ObjectId(id)})
+
+        res.status(200).json({
+            success: true,
+            message: 'Bill deleted successfully',
+            data: result,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+}
+
 
 export const BillController = {
     allBill,
     singleBill,
     payBill,
     myBill,
-    myBillUpdate
+    myBillUpdate,
+    myBillDelete
 }
