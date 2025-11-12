@@ -53,7 +53,6 @@ const payBill = async (req, res) => {
 const myBill = async (req, res) => {
     try {
         const { email } = req?.params;
-        console.log(email)
         const bills = await db.collection('myBill').find({
             email: email
         }).toArray();
@@ -74,7 +73,6 @@ const myBillUpdate = async (req, res) => {
         const { id, amount, address, phone, date } = req.body;
         const { email } = req.params;
 
-        console.log(id)
         const result = await db.collection("myBill").updateOne(
             { _id: new ObjectId(id) },
             {
