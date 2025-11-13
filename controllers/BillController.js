@@ -25,7 +25,7 @@ const singleBill = async (req, res) => {
             success: true,
             data: bill
         });
-        
+
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -33,6 +33,7 @@ const singleBill = async (req, res) => {
         });
     }
 }
+
 
 const payBill = async (req, res) => {
     try {
@@ -106,10 +107,10 @@ const myBillUpdate = async (req, res) => {
     }
 };
 
-const myBillDelete = async (req,res) => {
+const myBillDelete = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await db.collection("myBill").deleteOne({_id: new ObjectId(id)})
+        const result = await db.collection("myBill").deleteOne({ _id: new ObjectId(id) })
 
         res.status(200).json({
             success: true,
@@ -125,11 +126,45 @@ const myBillDelete = async (req,res) => {
 }
 
 
+
+const filterByBill = async (req, res) => {
+    try {
+        const { category, search } = req.query;
+        const query = {};
+
+        if (category && category.toLowerCase() !== 'all') {
+            query.category = category;
+        }
+
+        if (search && search.trim() !== '') {
+            query.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { username: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        const bills = await db.collection('bills').find(query).toArray();
+
+        res.status(200).json({
+            success: true,
+            data: bills
+        });
+    } catch (error) {
+        console.error('Error in filterBills:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
+
 export const BillController = {
     allBill,
     singleBill,
     payBill,
     myBill,
     myBillUpdate,
-    myBillDelete
+    myBillDelete,
+    filterByBill
 }
