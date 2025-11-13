@@ -3,8 +3,15 @@ import { db } from "../connection.js"
 
 
 
-const allBill = async (req, res) => {
+const recentBill = async (req, res) => {
     const bills = await db.collection('bills').find({}).limit(6).toArray();
+    res.status(200).json({
+        success: true,
+        data: bills
+    });
+}
+const allBill = async (req, res) => {
+    const bills = await db.collection('bills').find({}).toArray();
     res.status(200).json({
         success: true,
         data: bills
@@ -166,5 +173,6 @@ export const BillController = {
     myBill,
     myBillUpdate,
     myBillDelete,
-    filterByBill
+    filterByBill,
+    recentBill
 }
