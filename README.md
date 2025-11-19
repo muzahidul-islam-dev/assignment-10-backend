@@ -29,14 +29,15 @@ This is the backend API for the Bill Management application. It provides RESTful
 
 ## Dependencies
 
-| Package        | Version   |
-|----------------|-----------|
-| express        | ^4.x.x    |
-| mongoose       | ^7.x.x    |
-| jsonwebtoken   | ^9.x.x    |
-| bcryptjs       | ^2.x.x    |
-| cors           | ^2.x.x    |
-| dotenv         | ^16.x.x   |
+```bash
+"dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "lottie-react": "^2.4.1",
+    "mongodb": "^7.0.0"
+  }
+```
 
 *(Replace with your actual versions)*
 
