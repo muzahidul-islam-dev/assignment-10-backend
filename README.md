@@ -11,17 +11,13 @@ This is the backend API for the Bill Management application. It provides RESTful
 - **Node.js**  
 - **Express.js**  
 - **MongoDB** (or your DB of choice)  
-- **Mongoose** (for MongoDB object modeling)  
-- **JWT** (JSON Web Tokens for authentication)  
 - **Cors**  
 - **dotenv** (for environment variables)  
 
 ---
 
 ## Key Features  
-- User authentication and authorization (register, login, logout)  
 - CRUD operations for bills and categories  
-- Secure API endpoints with JWT authentication  
 - Data validation and error handling  
 - Integration-ready to connect with the frontend app  
 
@@ -38,8 +34,6 @@ This is the backend API for the Bill Management application. It provides RESTful
     "mongodb": "^7.0.0"
   }
 ```
-
-*(Replace with your actual versions)*
 
 ---
 
